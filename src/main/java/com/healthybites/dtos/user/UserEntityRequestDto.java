@@ -26,4 +26,6 @@ public class UserEntityRequestDto {
     @NotBlank(message = "La contraseña no puede estar en blanco")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres") 
 	private String password;
+    
+    
 }

@@ -2,11 +2,15 @@ package com.healthybites.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,5 +51,12 @@ public class UserEntity {
 	
    @Column(name = "registration_date")
     private LocalDateTime registrationDate;
+   
+   // Role 
+   @ManyToOne
+   @JoinColumn(name = "role_id", nullable = false)
+   @JsonBackReference
+   private RoleEntity role;
+   
 	
 }
