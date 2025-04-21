@@ -4,13 +4,16 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,5 +61,19 @@ public class UserEntity {
    @JsonBackReference
    private RoleEntity role;
    
-	
+   // InfoUser
+   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+   private InfoUserEntity infoUser;
+   
+   public void addInfoUser(InfoUserEntity infoUser) {
+	   this.infoUser = infoUser;
+	   infoUser.setUser(null);
+   }
+   
+   public void removeInfoUser(InfoUserEntity infoUser) {
+	   if (this.infoUser != null) {
+		this.infoUser.setUser(null);
+	   }
+	   this.infoUser = null;
+   }
 }

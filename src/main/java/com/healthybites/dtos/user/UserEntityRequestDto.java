@@ -1,5 +1,8 @@
 package com.healthybites.dtos.user;
 
+import com.healthybites.dtos.infouser.InfoUserRequestDto;
+
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,6 +29,7 @@ public class UserEntityRequestDto {
     @NotBlank(message = "La contraseña no puede estar en blanco")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres") 
 	private String password;
-    
-    
+  
+    @Valid
+    private InfoUserRequestDto infoUser;
 }
