@@ -1,6 +1,8 @@
 package com.healthybites.dtos.infouser;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class InfoUserRequestDto {
 
-	@NotBlank(message = "La altura del usario no puede estar en blanco")
+	@NotNull(message = "El campo altura no puede ser nulo")
+	@Positive(message = "La altura debe ser un número positivo")
 	private Double height;
 	
-	@NotBlank(message = "El peso del usariopuede no puede estar en blanco")
+	@NotNull(message = "El campo peso no puede ser nulo")
+	@Positive(message = "El peso debe ser un número positivo")
 	private Double weight;
 	
 	@NotBlank(message = "El nivel de actividad fisica del usario no puede estar en blanco")
