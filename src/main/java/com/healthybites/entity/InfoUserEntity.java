@@ -35,7 +35,7 @@ public class InfoUserEntity {
 	private String activityLevel;
 	
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 	
 }
