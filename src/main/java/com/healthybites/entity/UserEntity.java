@@ -1,9 +1,13 @@
 package com.healthybites.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +26,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -52,14 +57,56 @@ public class UserEntity {
 	@Column(name = "is_enable")
 	private Boolean isEnable;
 	
-   @Column(name = "registration_date")
-    private LocalDateTime registrationDate;
-   
-   // Role 
-   @ManyToOne
-   @JoinColumn(name = "role_id", nullable = false)
-   @JsonBackReference
-   private RoleEntity role;
+	@Column(name = "registration_date")
+	private LocalDateTime registrationDate;
+	
+	// Role 
+	@ManyToOne
+	@JoinColumn(name = "role_id", nullable = false)
+	@JsonBackReference
+	private RoleEntity role;
+	
+	@Builder.Default
+	@OneToMany(
+			mappedBy = "user", 
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+			)
+	@JsonManagedReference
+	private List<AdviceEntity> tips = new ArrayList<>();
+	
+	public void addAdvice(AdviceEntity advice) {
+		tips.add(advice);
+		advice.setUser(this);
+		
+	}
+	
+	public void removeAdvice(AdviceEntity advice) {
+		tips.remove(advice);
+		advice.setUser(this);
+		
+	}
+	
+	@Builder.Default
+	@OneToMany(
+			mappedBy = "user", 
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+			)
+	@JsonManagedReference
+	private List<RecipeEntity> recipes = new ArrayList<>();
+	
+	public void addRecipe(RecipeEntity recipe) {
+		recipes.add(recipe);
+		recipe.setUser(this);
+		
+	}
+	
+	public void removeRecipe(RecipeEntity recipe) {
+		recipes.remove(recipe);
+		recipe.setUser(this);
+		
+	}
    
    // InfoUser
    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
