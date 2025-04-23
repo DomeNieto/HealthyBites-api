@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientResponseDto {
-
+	private long id;
     private String name;
     private float quantityCalories;
     private LocalDateTime creationDate;

@@ -30,7 +30,7 @@ public class IngredientEntity {
 	private String name;
 	
 	@Column(nullable = false)
-	private float quantity_calories;
+	private float quantityCalories;
 	
 	@Column(nullable = false)
 	private LocalDateTime creationDate;
