@@ -15,6 +15,7 @@ public interface RecipeMapper {
     @Mapping(target = "recipeIngredients", ignore = true)
     RecipeEntity toRecipe(RecipeRequestDto dto);
 
-    @Mapping(target = "ingredients", source = "recipeIngredients")
+    @Mapping(target = "ingredients", ignore= true)
     RecipeResponseDto toRecipeResponseDto(RecipeEntity entity);
 }
+
