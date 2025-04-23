@@ -2,7 +2,7 @@ package com.healthybites.dtos.recipe;
 
 import java.util.List;
 
-import com.healthybites.dtos.recipeingredient.RecipeIngredientResponseDto;
+import com.healthybites.dtos.ingredient.IngredientResponseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +15,5 @@ public class RecipeResponseDto {
 
     private String name;
     private String preparation;
-    private List<RecipeIngredientResponseDto> ingredients;
+    private List<IngredientResponseDto> ingredients;
 }
