@@ -12,11 +12,9 @@ public interface IngredientMapper {
 
     // dto -> entity
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "quantityCalories", target = "quantity_calories")
     @Mapping(target = "recipeIngredients", ignore = true) 
     IngredientEntity toIngredient(IngredientRequestDto dto);
 
     // entity -> dto
-    @Mapping(source = "quantity_calories", target = "quantityCalories")
     IngredientResponseDto toIngredientResponseDto(IngredientEntity entity);
 }
