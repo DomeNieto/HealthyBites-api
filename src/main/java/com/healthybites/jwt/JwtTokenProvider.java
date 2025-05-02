@@ -2,6 +2,7 @@ package com.healthybites.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -27,8 +28,14 @@ public class JwtTokenProvider {
 		Date currentDate = new Date();
 		Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION_DATE);
 		
+	    String role = authentication.getAuthorities().stream()
+	                .findFirst()
+	                .map(GrantedAuthority::getAuthority)
+	                .orElse("ROLE_USER");
+	     
 		return Jwts.builder()
 				   .subject(username)
+				   .claim("role", role)
 				   .issuedAt(currentDate)
 				   .expiration(expireDate)
 				   .signWith(getSignInKey(), Jwts.SIG.HS256)
@@ -43,6 +50,10 @@ public class JwtTokenProvider {
 	public String getSubjectFromToken(String token) {
 		return extraClaim(token, Claims::getSubject);
 	}
+	
+    public String getRoleFromToken(String token) {
+        return extraClaim(token, claims -> claims.get("role", String.class));
+    }
 	
 	private boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
