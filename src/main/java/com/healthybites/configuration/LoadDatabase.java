@@ -13,7 +13,7 @@ import com.healthybites.entity.UserEntity;
 import com.healthybites.repositoy.RoleRepository;
 import com.healthybites.repositoy.UserRepository;
 
-@Configuration
+//@Configuration
 public class LoadDatabase {
 
 	@Autowired
