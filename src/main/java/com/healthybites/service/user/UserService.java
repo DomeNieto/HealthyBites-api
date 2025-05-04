@@ -12,5 +12,6 @@ public interface UserService {
 	UserEntityResponseDto getUserById(Long id);
 	UserEntityResponseDto updateUser(Long id, UserEntityRequestDto userRequestDto);
 	void deleteUser(Long id);
+	UserEntityResponseDto findUserByEmail(String email);
 	
 }

@@ -2,6 +2,7 @@ package com.healthybites.service.user;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,18 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	private static final String USER_NOT_FOUND = "User with id %d not found";
+	private static final String USER_NOT_FOUND_MSG = "User with email '%s' not found.";
 	private static final String ROLE_NOT_FOUND_MSG = "Role '%s' not found.";
 	private static final String DEFAULT_ROLE_NAME = "USER"; 
 	
 	private UserEntity validateAndGetUser(Long id) {
 		return userRepository.findById(id)
 							 .orElseThrow(() -> new ResourceNotFoundException(String.format(USER_NOT_FOUND, id)));
+	}
+	
+	private UserEntity validateAndGetUser(String email) {
+		return userRepository.findByEmail(email)
+							 .orElseThrow(() -> new ResourceNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
 	}
 	
 	private RoleEntity getRoleByName(String roleName) {
@@ -127,6 +134,12 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(Long id) {
 		UserEntity userEntity = validateAndGetUser(id);
 		userRepository.delete(userEntity);
+	}
+
+	@Override
+	public UserEntityResponseDto findUserByEmail(String email) {
+		  UserEntity userEntity = validateAndGetUser(email);
+		  return userMapper.toUserResponseDto(userEntity);
 	}
 
 }

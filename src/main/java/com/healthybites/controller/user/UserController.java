@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.healthybites.api.ApiResponseDto;
@@ -33,6 +34,7 @@ public class UserController {
 	UserServiceImpl userService;
 	
 	private static final String USER_RESOURCE = "/users";
+	private static final String CURRENT_USER_RESOURCE = USER_RESOURCE + "/by-email";
 	private static final String USER_ID_PATH = USER_RESOURCE + "/{userId}";
 	
 	@PostMapping(value = USER_RESOURCE,
@@ -68,6 +70,16 @@ public class UserController {
 
 	}
 	
+	@GetMapping(value = CURRENT_USER_RESOURCE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ApiResponseDto<UserEntityResponseDto>> getUserByEmail( @RequestParam  String email) {
+		UserEntityResponseDto user  = userService.findUserByEmail(email);
+
+		ApiResponseDto<UserEntityResponseDto> response = new ApiResponseDto<>("User fetched succesfully", HttpStatus.OK.value(), user);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
+	}
+
 	@PutMapping(value = USER_ID_PATH,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
