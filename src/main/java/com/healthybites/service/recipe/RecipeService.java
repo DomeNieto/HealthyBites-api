@@ -16,4 +16,5 @@ public interface RecipeService {
 	public List<IngredientResponseDto> getIngredientsForRecipe(Long recipeId);
 	public List<RecipeResponseDto> getAllRecipesByUser(Long userId);
 	public RecipeResponseDto getRecipeById(Long recipeId);
+	public boolean addIngredientToRecipe(Long recipeId, Long ingredientId, float quantity);
 }

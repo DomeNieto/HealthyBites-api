@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.healthybites.api.ApiResponseDto;
 import com.healthybites.dtos.ingredient.IngredientResponseDto;
+import com.healthybites.dtos.recipe.AddIngredientToRecipeDto;
 import com.healthybites.dtos.recipe.RecipeRequestDto;
 import com.healthybites.dtos.recipe.RecipeResponseDto;
 import com.healthybites.service.recipe.RecipeServiceImpl;
@@ -97,4 +98,18 @@ public class RecipeController {
         recipeService.deleteIngredientToRecipe(recipeId, ingredientId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    @PostMapping(value = RECIPE_ID_PATH + "/ingredients", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponseDto<String>> addIngredientToRecipe(
+            @PathVariable Long recipeId,
+            @Valid @RequestBody AddIngredientToRecipeDto dto) {
+
+        recipeService.addIngredientToRecipe(recipeId, dto.getIngredientId(), dto.getQuantity());
+
+        ApiResponseDto<String> response = new ApiResponseDto<>(
+                "Ingredient added to recipe successfully", HttpStatus.OK.value(), null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 	}

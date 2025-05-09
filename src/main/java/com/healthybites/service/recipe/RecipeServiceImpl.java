@@ -11,12 +11,14 @@ import com.healthybites.dtos.recipe.RecipeResponseDto;
 import com.healthybites.entity.IngredientEntity;
 import com.healthybites.entity.RecipeEntity;
 import com.healthybites.entity.RecipeIngredientEntity;
+import com.healthybites.entity.UserEntity;
 import com.healthybites.exception.ResourceNotFoundException;
 import com.healthybites.mappers.ingredient.IngredientMapper;
 import com.healthybites.mappers.recipe.RecipeMapper;
 import com.healthybites.repositoy.IngredientRepository;
 import com.healthybites.repositoy.RecipeIngredientRepository;
 import com.healthybites.repositoy.RecipeRepository;
+import com.healthybites.repositoy.UserRepository;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -32,6 +34,9 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Autowired
 	private IngredientRepository ingredientRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private RecipeMapper recipeMapper;
@@ -72,8 +77,10 @@ public class RecipeServiceImpl implements RecipeService {
 		if (recipeRepository.existsByName(recipeDto.getName())) {
 			throw new com.healthybites.exception.Exception(String.format("Ya existe una receta con el nombre %s", recipeDto.getName()));
 		}
-		RecipeEntity saved = recipeRepository.save(recipeMapper.toRecipe(recipeDto));
-
+		UserEntity user = validateAndGetUser(recipeDto.getUserId());
+		RecipeEntity toSave = recipeMapper.toRecipe(recipeDto);
+		toSave.setUser(user);
+		RecipeEntity saved = recipeRepository.save(toSave);
 		if (recipeDto.getIngredients() != null) {
 			recipeDto.getIngredients().forEach(recipeIngredientDto -> {
 				IngredientEntity ingredient = validateAndGetIngredient(recipeIngredientDto.getIngredientId());
@@ -131,8 +138,28 @@ public class RecipeServiceImpl implements RecipeService {
 		return response;
 	}
 
+	@Override
+	public boolean addIngredientToRecipe(Long recipeId, Long ingredientId, float quantity) {
+		try {
+			RecipeEntity recipe = validateAndGetRecipe(recipeId);
+			IngredientEntity ingredient = validateAndGetIngredient(ingredientId);
+			RecipeIngredientEntity relation = new RecipeIngredientEntity(recipe, ingredient, quantity);
+			recipeIngredientRepository.save(relation);
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	// helpers
 
+	private UserEntity validateAndGetUser(Long userId) {
+	    return userRepository.findById(userId)
+	        .orElseThrow(() -> new ResourceNotFoundException(
+	            String.format("User with id %d not found", userId)));
+	}
 	private RecipeEntity validateAndGetRecipe(Long recipeId) {
 		return recipeRepository.findById(recipeId)
 				.orElseThrow(() -> new ResourceNotFoundException(String.format(RECIPE_NOT_FOUND, recipeId)));
@@ -152,6 +179,7 @@ public class RecipeServiceImpl implements RecipeService {
 	            rel.getIngredient().getCreationDate()
 	    )).toList();
 	}
+
 
 
 }

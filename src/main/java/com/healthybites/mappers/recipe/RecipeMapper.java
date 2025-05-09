@@ -11,11 +11,12 @@ import com.healthybites.mappers.recipeingredient.RecipeIngredientMapper;
 @Mapper(componentModel = "spring", uses = {RecipeIngredientMapper.class})
 public interface RecipeMapper {
 
-    @Mapping(target = "id", ignore = true)
+	@Mapping(target = "id", ignore = true)
     @Mapping(target = "recipeIngredients", ignore = true)
+    @Mapping(target = "user", ignore = true)  
     RecipeEntity toRecipe(RecipeRequestDto dto);
 
-    @Mapping(target = "ingredients", ignore= true)
+    @Mapping(target = "ingredients", ignore = true)
     RecipeResponseDto toRecipeResponseDto(RecipeEntity entity);
 }
 

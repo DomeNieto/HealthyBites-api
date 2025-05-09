@@ -1,5 +1,7 @@
 package com.healthybites.dtos.recipe;
 
+import java.util.List;
+
 import com.healthybites.entity.UserEntity;
 
 import jakarta.validation.constraints.NotBlank;
@@ -23,5 +25,8 @@ public class RecipeRequestDto {
     private String preparation;
 
     @NotNull(message = "El usuario no puede estar vacío")
-    private UserEntity user;
+    private Long userId;
+    
+    @NotNull(message = "La lista de ingredientes no puede ser nula")
+    private List<RecipeIngredientDto> ingredients;
 }
