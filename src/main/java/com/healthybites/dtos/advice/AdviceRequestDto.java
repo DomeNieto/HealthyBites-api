@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import com.healthybites.entity.UserEntity;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,9 @@ public class AdviceRequestDto {
 	@NotBlank(message = "La descripción no puede estar en blanco")
     @Size(max = 200, message = "La descripción no puede tener más de 200 caracteres")
 	private String description;
-	@NotBlank(message = "El campo de fecha de creación no puede estar en blanco")
+	@NotNull(message = "El campo de fecha de creación no puede estar en blanco")
 	private LocalDateTime creationDate;
-	@NotBlank(message = "El campo usuario no puede estar en blanco")
-    private UserEntity user;
+//	@NotNull(message = "El campo usuario no puede estar en blanco")
+	/*TODO: Preguntar a los profesores, en el diseño de la bd.*/
+    /* private Long userId;*/
 }
