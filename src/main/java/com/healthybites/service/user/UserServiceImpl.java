@@ -123,6 +123,12 @@ public class UserServiceImpl implements UserService {
 	             if (infoDto.getActivityLevel() != null && !infoDto.getActivityLevel().isEmpty()) {
 	                 existingInfo.setActivityLevel(infoDto.getActivityLevel());
 	             }
+	             if (infoDto.getAge() != 0) {
+	                 existingInfo.setAge(infoDto.getAge());
+	             }
+	             if (infoDto.getSex() != null && !infoDto.getSex().isEmpty()) {
+	                 existingInfo.setSex(infoDto.getSex());
+	             }
 	         }
 	     }
 	    

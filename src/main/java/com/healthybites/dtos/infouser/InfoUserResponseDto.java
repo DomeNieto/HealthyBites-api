@@ -15,4 +15,6 @@ public class InfoUserResponseDto {
 	private Double height;
 	private Double weight;
 	private String activityLevel;
+	private String sex;
+	private int age;
 }
