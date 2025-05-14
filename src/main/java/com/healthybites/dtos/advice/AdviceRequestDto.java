@@ -25,7 +25,4 @@ public class AdviceRequestDto {
 	private String description;
 	@NotNull(message = "El campo de fecha de creación no puede estar en blanco")
 	private LocalDateTime creationDate;
-//	@NotNull(message = "El campo usuario no puede estar en blanco")
-	/*TODO: Preguntar a los profesores, en el diseño de la bd.*/
-    /* private Long userId;*/
 }

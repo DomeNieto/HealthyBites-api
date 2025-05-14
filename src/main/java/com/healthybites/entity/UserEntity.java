@@ -64,27 +64,7 @@ public class UserEntity {
 	@JoinColumn(name = "role_id", nullable = false)
 	@JsonBackReference
 	private RoleEntity role;
-	
-	@Builder.Default
-	@OneToMany(
-			mappedBy = "user", 
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-			)
-	@JsonManagedReference
-	private List<AdviceEntity> tips = new ArrayList<>();
-	
-	public void addAdvice(AdviceEntity advice) {
-		tips.add(advice);
-		advice.setUser(this);
-		
-	}
-	
-	public void removeAdvice(AdviceEntity advice) {
-		tips.remove(advice);
-		advice.setUser(this);
-		
-	}
+
 	
 	@Builder.Default
 	@OneToMany(
