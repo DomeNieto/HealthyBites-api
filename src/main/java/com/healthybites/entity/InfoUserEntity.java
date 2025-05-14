@@ -31,8 +31,15 @@ public class InfoUserEntity {
 	@Column(name = "weight", nullable = false)
 	private Double weight;
 	
+	@Column(name = "sex", length = 30)
+	private String sex;
+	
+	@Column(name = "age", nullable = false)
+	private int age;
+	
 	@Column(name = "activity_level", length = 30)
 	private String activityLevel;
+	
 	
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

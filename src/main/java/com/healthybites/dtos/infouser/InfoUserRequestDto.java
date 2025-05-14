@@ -24,4 +24,11 @@ public class InfoUserRequestDto {
 	
 	@NotBlank(message = "El nivel de actividad fisica del usario no puede estar en blanco")
 	private String activityLevel;
+	
+	@NotNull(message = "El campo age no puede ser nulo")
+	@Positive(message = "El age debe ser un número positivo")
+	private int age;
+	
+	@NotBlank(message = "El nivel sexo no puede estar en blanco")
+	private String sex;
 }
