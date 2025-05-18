@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class IngredientResponseDto {
 
     private String name;
+    private float quantity;
     private float quantityCalories;
     private LocalDateTime creationDate;
 }

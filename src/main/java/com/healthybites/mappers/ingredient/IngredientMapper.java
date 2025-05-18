@@ -16,5 +16,7 @@ public interface IngredientMapper {
     IngredientEntity toIngredient(IngredientRequestDto dto);
 
     // entity -> dto
+    @Mapping(target = "quantity", constant = "0") 
+    @Mapping(target = "quantityCalories", expression = "java(entity.getQuantityCalories())") 
     IngredientResponseDto toIngredientResponseDto(IngredientEntity entity);
 }
