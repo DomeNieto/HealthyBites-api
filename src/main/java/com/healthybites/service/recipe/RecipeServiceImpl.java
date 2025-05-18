@@ -172,12 +172,19 @@ public class RecipeServiceImpl implements RecipeService {
 	
 	private List<IngredientResponseDto> getIngredientDtosByRecipe(RecipeEntity recipe) {
 	    List<RecipeIngredientEntity> relations = recipeIngredientRepository.findByRecipeId(recipe.getId());
-	    return relations.stream().map(rel -> new IngredientResponseDto(
+	    return relations.stream().map(rel -> {
+	        float quantity  = rel.getQuantity();                          
+	        float calories = rel.getIngredient().getQuantityCalories();  
+	        float total  = quantity * calories;                      
+
+	        return new IngredientResponseDto(
 	            rel.getIngredient().getId(),
 	            rel.getIngredient().getName(),
-	            rel.getIngredient().getQuantityCalories(),
+	            quantity,         
+	            total,        
 	            rel.getIngredient().getCreationDate()
-	    )).toList();
+	        );
+	    }).toList();
 	}
 
 
