@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdviceResponseDto {
-
+	
+	private long id;
 	private String title;
 	private String description;
 	private LocalDateTime creationDate;
