@@ -58,7 +58,7 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-    @PutMapping(value = INGREDIENT_ID_PATH + "/reactivate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = INGREDIENT_ID_PATH + "/reactivate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseDto<IngredientResponseDto>> reactivateIngredient(
             @PathVariable Long ingredientId
     ) {
@@ -68,7 +68,7 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping(value = INGREDIENT_ID_PATH + "/disable")
+    @PutMapping(value = INGREDIENT_ID_PATH + "/disable", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> disableIngredient(@PathVariable Long ingredientId) {
         ingredientService.disableIngredient(ingredientId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
