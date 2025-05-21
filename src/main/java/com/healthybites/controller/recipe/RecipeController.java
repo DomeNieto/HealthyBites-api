@@ -36,14 +36,6 @@ public class RecipeController {
     @Autowired
     private RecipeServiceImpl recipeService;
 
-    @GetMapping(value = RECIPE_RESOURCE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponseDto<List<RecipeResponseDto>>> getAllRecipes() {
-        List<RecipeResponseDto> recipes = recipeService.getAllRecipes();
-        ApiResponseDto<List<RecipeResponseDto>> response =
-                new ApiResponseDto<>("Recipes fetched successfully", HttpStatus.OK.value(), recipes);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @GetMapping(value = RECIPE_RESOURCE + "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseDto<List<RecipeResponseDto>>> getAllRecipesByUser(@PathVariable Long userId) {
         List<RecipeResponseDto> recipes = recipeService.getAllRecipesByUser(userId);
@@ -92,13 +84,6 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
- 
-    @DeleteMapping(value = RECIPE_ID_PATH + "/ingredients/{ingredientId}")
-    public ResponseEntity<Void> deleteIngredientFromRecipe(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
-        recipeService.deleteIngredientToRecipe(recipeId, ingredientId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    
     @PostMapping(value = RECIPE_ID_PATH + "/ingredients", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseDto<String>> addIngredientToRecipe(
             @PathVariable Long recipeId,

@@ -13,5 +13,6 @@ public class IngredientResponseDto {
     private String name;
     private float quantity;
     private float quantityCalories;
+    private boolean active; 
     private LocalDateTime creationDate;
 }

@@ -47,7 +47,6 @@ public class UserController {
 
 		ApiResponseDto<UserEntityResponseDto> response = new ApiResponseDto<>("User added succesfully", HttpStatus.CREATED.value(), createdUser);
 
-
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	

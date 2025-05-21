@@ -28,12 +28,6 @@ public class AdviceServiceImpl implements AdviceService {
 	}
 
 	@Override
-	public AdviceResponseDto getAdviceById(Long adviceId) {
-		AdviceEntity advice = validateAndGetAdvice(adviceId);
-		return adviceMapper.toAdviceResponseDto(advice);
-	}
-
-	@Override
 	public AdviceResponseDto createAdvice(AdviceRequestDto adviceRequestDto) {
 		AdviceEntity advice = adviceMapper.toAdvice(adviceRequestDto);
 		advice.setCreationDate(LocalDateTime.now());

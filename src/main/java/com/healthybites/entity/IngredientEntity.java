@@ -34,6 +34,9 @@ public class IngredientEntity {
 	
 	@Column(nullable = false)
 	private LocalDateTime creationDate;
+
+	@Column(nullable = false)
+    private boolean active;
 	
 	@OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<RecipeIngredientEntity> recipeIngredients = new HashSet<>();

@@ -43,14 +43,6 @@ public class AdviceController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value = ADVICE_ID_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponseDto<AdviceResponseDto>> getAdviceById(@PathVariable Long adviceId) {
-        AdviceResponseDto advice = adviceService.getAdviceById(adviceId);
-        ApiResponseDto<AdviceResponseDto> response =
-                new ApiResponseDto<>("Advice fetched successfully", HttpStatus.OK.value(), advice);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @PostMapping(value = ADVICE_RESOURCE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseDto<AdviceResponseDto>> createAdvice(
             @Valid @RequestBody AdviceRequestDto adviceRequestDto) {

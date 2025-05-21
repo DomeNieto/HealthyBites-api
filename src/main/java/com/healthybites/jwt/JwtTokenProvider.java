@@ -55,14 +55,6 @@ public class JwtTokenProvider {
         return extraClaim(token, claims -> claims.get("role", String.class));
     }
 	
-	private boolean isTokenExpired(String token) {
-		return extractExpiration(token).before(new Date());
-	}
-	
-	private Date extractExpiration(String token) {
-		return extraClaim(token, Claims::getExpiration);
-	}
-	
 	public boolean validateToken(String token) {
 		Jwts.parser()
 			.verifyWith(getSignInKey())

@@ -8,13 +8,12 @@ import com.healthybites.dtos.recipe.RecipeResponseDto;
 
 public interface RecipeService {
 
-	public List<RecipeResponseDto> getAllRecipes();
-	public RecipeResponseDto createRecipe(RecipeRequestDto recipeRequestDto);
-	public RecipeResponseDto updateRecipe(Long recipeId, RecipeRequestDto recipeRequest);
-	public void deleteRecipe(Long recipeId);
-	public boolean deleteIngredientToRecipe(Long recipeId, Long ingredientId);
-	public List<IngredientResponseDto> getIngredientsForRecipe(Long recipeId);
-	public List<RecipeResponseDto> getAllRecipesByUser(Long userId);
-	public RecipeResponseDto getRecipeById(Long recipeId);
-	public boolean addIngredientToRecipe(Long recipeId, Long ingredientId, float quantity);
+	List<RecipeResponseDto> getAllRecipes();
+	RecipeResponseDto createRecipe(RecipeRequestDto recipeRequestDto);
+	RecipeResponseDto updateRecipe(Long recipeId, RecipeRequestDto recipeRequest);
+	void deleteRecipe(Long recipeId);
+	List<IngredientResponseDto> getIngredientsForRecipe(Long recipeId);
+	List<RecipeResponseDto> getAllRecipesByUser(Long userId);
+	RecipeResponseDto getRecipeById(Long recipeId);
+	boolean addIngredientToRecipe(Long recipeId, Long ingredientId, float quantity);
 }

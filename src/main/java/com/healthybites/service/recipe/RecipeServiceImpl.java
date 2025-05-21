@@ -110,14 +110,6 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
-	public boolean deleteIngredientToRecipe(Long recipeId, Long ingredientId) {
-		validateAndGetRecipe(recipeId);
-		validateAndGetIngredient(ingredientId);
-		recipeIngredientRepository.deleteByRecipeIdAndIngredientId(recipeId, ingredientId);
-		return true;
-	}
-
-	@Override
 	public RecipeResponseDto updateRecipe(Long recipeId, RecipeRequestDto dto) {
 		RecipeEntity recipe = validateAndGetRecipe(recipeId);
 		recipe.setName(dto.getName());
@@ -181,8 +173,10 @@ public class RecipeServiceImpl implements RecipeService {
 	            rel.getIngredient().getId(),
 	            rel.getIngredient().getName(),
 	            quantity,         
-	            total,        
+	            total,
+	            rel.getIngredient().isActive(),
 	            rel.getIngredient().getCreationDate()
+				
 	        );
 	    }).toList();
 	}
