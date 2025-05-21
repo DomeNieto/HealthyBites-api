@@ -68,7 +68,7 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = INGREDIENT_ID_PATH)
+    @PutMapping(value = INGREDIENT_ID_PATH + "/disable")
     public ResponseEntity<Void> disableIngredient(@PathVariable Long ingredientId) {
         ingredientService.disableIngredient(ingredientId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
