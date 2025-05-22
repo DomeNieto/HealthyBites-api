@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * RecipeResponseDto
+ * The response body containing the details of the recipe.
+ */
 public class RecipeResponseDto {
 	private long id;
     private String name;

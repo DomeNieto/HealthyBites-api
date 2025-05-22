@@ -21,6 +21,11 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "advice")
+/**
+ * AdviceEntity
+ * Represents an advice entity in the database.
+ * Contains fields for id, title, description, and creation date.
+ */
 public class AdviceEntity {
 
 	@Id

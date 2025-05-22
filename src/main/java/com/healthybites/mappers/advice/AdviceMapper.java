@@ -10,11 +10,16 @@ import com.healthybites.entity.AdviceEntity;
 @Mapper(componentModel = "spring")
 public interface AdviceMapper {
 
-	// dto-> entity
+	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "creationDate", ignore = true)
+	/*
+	 * Converts an AdviceRequestDto to an AdviceEntity.
+	 */
 	AdviceEntity toAdvice(AdviceRequestDto adviceResquestDto);
 	
-	//entity to dto
+	/*
+	 * * Converts an AdviceEntity to an AdviceResponseDto.
+	 */
 	AdviceResponseDto toAdviceResponseDto(AdviceEntity advice);
 }

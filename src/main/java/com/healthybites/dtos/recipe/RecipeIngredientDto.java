@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * RecipeIngredientDto
+ * The request body containing the details of the ingredient to be added to the recipe.
+ */
 public class RecipeIngredientDto {
 	@NotNull(message = "El id del ingrediente para la receta no puede estar vacío")
 	private Long ingredientId;

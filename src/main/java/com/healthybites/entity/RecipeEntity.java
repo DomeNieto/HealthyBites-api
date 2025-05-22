@@ -25,6 +25,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "recipe")
+/**
+ * RecipeEntity
+ * Represents a recipe entity in the database.
+ * Contains fields for id, name, preparation, user, and recipe ingredients.
+ */
 public class RecipeEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

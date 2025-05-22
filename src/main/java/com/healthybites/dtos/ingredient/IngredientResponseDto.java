@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+/**
+ * IngredientResponseDto
+ * The response body containing the details of the ingredient.
+ */
 public class IngredientResponseDto {
 	private long id;
     private String name;

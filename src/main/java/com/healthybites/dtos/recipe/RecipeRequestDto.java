@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * RecipeRequestDto
+ * The request body containing the details of the recipe to be created.
+ */
 public class RecipeRequestDto {
 
     @NotBlank(message = "El nombre de la receta no puede estar en blanco")

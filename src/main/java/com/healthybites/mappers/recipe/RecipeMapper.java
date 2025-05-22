@@ -14,9 +14,23 @@ public interface RecipeMapper {
 	@Mapping(target = "id", ignore = true)
     @Mapping(target = "recipeIngredients", ignore = true)
     @Mapping(target = "user", ignore = true)  
+    /*
+     * Converts a RecipeRequestDto to a RecipeEntity.
+     * Ignores the id, recipeIngredients, and user fields during the conversion.
+     * 
+     * @param dto the RecipeRequestDto to convert
+     * @return the converted RecipeEntity
+    */
     RecipeEntity toRecipe(RecipeRequestDto dto);
 
     @Mapping(target = "ingredients", ignore = true)
+    /*
+     * Converts a RecipeEntity to a RecipeResponseDto.
+     * Ignores the ingredients field during the conversion.
+     * 
+     * @param entity the RecipeEntity to convert
+     * @return the converted RecipeResponseDto
+    */
     RecipeResponseDto toRecipeResponseDto(RecipeEntity entity);
 }
 

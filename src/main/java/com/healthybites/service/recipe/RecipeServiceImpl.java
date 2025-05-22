@@ -44,6 +44,12 @@ public class RecipeServiceImpl implements RecipeService {
 	@Autowired
 	private IngredientMapper ingredientMapper;
 
+	/**
+	 * This method retrieves all recipes from the database and maps them to a list of
+	 * RecipeResponseDto objects.
+	 * 
+	 * @return List<RecipeResponseDto> - A list of all recipes in the system.
+	 */
 	@Override
 	public List<RecipeResponseDto> getAllRecipes() {
 		return recipeRepository.findAll().stream().map(recipe -> {
@@ -54,6 +60,13 @@ public class RecipeServiceImpl implements RecipeService {
 		}).toList();
 	}
 
+	/**
+	 * This method retrieves all recipes for a specific user from the database and maps them to a list
+	 * of RecipeResponseDto objects.
+	 * 
+	 * @param userId - The ID of the user whose recipes are to be retrieved.
+	 * @return List<RecipeResponseDto> - A list of recipes for the specified user.
+	 */
 	@Override
 	public List<RecipeResponseDto> getAllRecipesByUser(Long userId) {
 		return recipeRepository.findByUserId(userId).stream().map(recipe -> {
@@ -64,6 +77,13 @@ public class RecipeServiceImpl implements RecipeService {
 		}).toList();
 	}
 	
+	/**
+	 * This method retrieves a recipe by its ID from the database and maps it to a RecipeResponseDto
+	 * object.
+	 * 
+	 * @param recipeId - The ID of the recipe to be retrieved.
+	 * @return RecipeResponseDto - The recipe with the specified ID.
+	 */
 	@Override
 	public RecipeResponseDto getRecipeById(Long recipeId) {
 		RecipeEntity recipe = validateAndGetRecipe(recipeId);
@@ -72,6 +92,12 @@ public class RecipeServiceImpl implements RecipeService {
 		return response;
 	}
 
+	/**
+	 * This method creates a new recipe in the database and maps it to a RecipeResponseDto object.
+	 * 
+	 * @param recipeDto - The request DTO containing the details of the recipe to be created.
+	 * @return RecipeResponseDto - The created recipe as a response DTO.
+	 */
 	@Override
 	public RecipeResponseDto createRecipe(RecipeRequestDto recipeDto) {
 		if (recipeRepository.existsByName(recipeDto.getName())) {
@@ -95,6 +121,13 @@ public class RecipeServiceImpl implements RecipeService {
 		return response;
 	}
 
+	/**
+	 * This method retrieves all ingredients for a specific recipe from the database and maps them to
+	 * a list of IngredientResponseDto objects.
+	 * 
+	 * @param recipeId - The ID of the recipe whose ingredients are to be retrieved.
+	 * @return List<IngredientResponseDto> - A list of ingredients for the specified recipe.
+	 */
 	@Override
 	public List<IngredientResponseDto> getIngredientsForRecipe(Long recipeId) {
 		validateAndGetRecipe(recipeId);
@@ -102,6 +135,11 @@ public class RecipeServiceImpl implements RecipeService {
 				.map(relation -> ingredientMapper.toIngredientResponseDto(relation.getIngredient())).toList();
 	}
 
+	/**
+	 * This method deletes a recipe by its ID from the database.
+	 * 
+	 * @param recipeId - The ID of the recipe to be deleted.
+	 */
 	@Override
 	public void deleteRecipe(Long recipeId) {
 		validateAndGetRecipe(recipeId);
@@ -109,6 +147,13 @@ public class RecipeServiceImpl implements RecipeService {
 		recipeRepository.deleteById(recipeId);
 	}
 
+	/**
+	 * This method updates an existing recipe in the database and maps it to a RecipeResponseDto object.
+	 * 
+	 * @param recipeId   - The ID of the recipe to be updated.
+	 * @param dto        - The request DTO containing the updated details of the recipe.
+	 * @return RecipeResponseDto - The updated recipe as a response DTO.
+	 */
 	@Override
 	public RecipeResponseDto updateRecipe(Long recipeId, RecipeRequestDto dto) {
 		RecipeEntity recipe = validateAndGetRecipe(recipeId);
@@ -130,6 +175,14 @@ public class RecipeServiceImpl implements RecipeService {
 		return response;
 	}
 
+	/**
+	 * This method adds an ingredient to a recipe by creating a new relation in the database.
+	 * 
+	 * @param recipeId    - The ID of the recipe to which the ingredient is to be added.
+	 * @param ingredientId - The ID of the ingredient to be added.
+	 * @param quantity     - The quantity of the ingredient to be added.
+	 * @return boolean - true if the ingredient was added successfully, false otherwise.
+	 */
 	@Override
 	public boolean addIngredientToRecipe(Long recipeId, Long ingredientId, float quantity) {
 		try {
@@ -147,21 +200,46 @@ public class RecipeServiceImpl implements RecipeService {
 
 	// helpers
 
+	/**
+	 * This method validates and retrieves a user by its ID from the database.
+	 * 
+	 * @param userId - The ID of the user to be retrieved.
+	 * @return UserEntity - The user with the specified ID.
+	 */
 	private UserEntity validateAndGetUser(Long userId) {
 	    return userRepository.findById(userId)
 	        .orElseThrow(() -> new ResourceNotFoundException(
 	            String.format("User with id %d not found", userId)));
 	}
+	/**
+	 * This method validates and retrieves a recipe by its ID from the database.
+	 * 
+	 * @param recipeId - The ID of the recipe to be retrieved.
+	 * @return RecipeEntity - The recipe with the specified ID.
+	 */
 	private RecipeEntity validateAndGetRecipe(Long recipeId) {
 		return recipeRepository.findById(recipeId)
 				.orElseThrow(() -> new ResourceNotFoundException(String.format(RECIPE_NOT_FOUND, recipeId)));
 	}
 
+	/**
+	 * This method validates and retrieves an ingredient by its ID from the database.
+	 * 
+	 * @param ingredientId - The ID of the ingredient to be retrieved.
+	 * @return IngredientEntity - The ingredient with the specified ID.
+	 */
 	private IngredientEntity validateAndGetIngredient(Long ingredientId) {
 		return ingredientRepository.findById(ingredientId)
 				.orElseThrow(() -> new ResourceNotFoundException(String.format(INGREDIENT_NOT_FOUND, ingredientId)));
 	}
 	
+	/**
+	 * This method retrieves all ingredients for a specific recipe from the database and maps them to
+	 * a list of IngredientResponseDto objects.
+	 * 
+	 * @param recipe - The recipe whose ingredients are to be retrieved.
+	 * @return List<IngredientResponseDto> - A list of ingredients for the specified recipe.
+	 */
 	private List<IngredientResponseDto> getIngredientDtosByRecipe(RecipeEntity recipe) {
 	    List<RecipeIngredientEntity> relations = recipeIngredientRepository.findByRecipeId(recipe.getId());
 	    return relations.stream().map(rel -> {

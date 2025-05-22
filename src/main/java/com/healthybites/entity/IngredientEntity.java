@@ -21,6 +21,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "ingredient")
+/**
+ * IngredientEntity
+ * Represents an ingredient entity in the database.
+ * Contains fields for id, name, quantityCalories, creationDate, and active status.
+ */
 public class IngredientEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

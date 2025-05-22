@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+/*
+ * IngredientRequestDto The request body containing the details of the ingredient to be
+ * created.
+ */
 public class IngredientRequestDto {
 
     @NotBlank(message = "El nombre del ingrediente no puede estar en blanco")

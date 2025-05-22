@@ -19,6 +19,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "recipe_ingredient")
 @IdClass(RecipeIngredientId.class)
+/**
+ * RecipeIngredientEntity
+ * Represents a many-to-many relationship between recipes and ingredients.
+ * Contains fields for recipe, ingredient, and quantity.
+ */
 public class RecipeIngredientEntity implements Serializable {
 
 	/**
