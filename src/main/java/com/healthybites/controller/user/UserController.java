@@ -166,7 +166,7 @@ public class UserController {
 								       {
 		                        		"id": 1,
 									    "name": "Eduardo Ortiz",
-									    "registrationDate":"2025-02-04T22:52:40.2276103",,
+									    "registrationDate":"2025-02-04T22:52:40.2276103",
 									    "infoUser": {
 									        "height": 1.35,
 									        "weight": 80.0,
@@ -174,16 +174,12 @@ public class UserController {
 									        "sex": "M",
 									        "activityLevel": "Media"
 									    }
-									}
+									},
+									
 									 {
-								    "timestamp": "2025-02-04T22:52:40.2276103",
-								    "message": "Users fetched succesfully",
-								    "code": 200,
-								    "data": [
-								       {
 		                        		"id": 2,
 									    "name": "Amelia Ortiz",
-									    "registrationDate":"2025-02-04T22:52:40.2276103",,
+									    "registrationDate":"2025-02-04T22:52:40.2276103",
 									    "infoUser": {
 									        "height": 1.35,
 									        "weight": 80.0,
@@ -191,6 +187,9 @@ public class UserController {
 									        "sex": "F",
 									        "activityLevel": "Media"
 									    }
+									    }
+									  ]
+									 
 									}
 		                        """
 		                    )
@@ -267,7 +266,7 @@ public class UserController {
 								       {
 		                        		"id": 1,
 									    "name": "Eduardo Ortiz",
-									    "registrationDate":"2025-02-04T22:52:40.2276103",,
+									    "registrationDate":"2025-02-04T22:52:40.2276103",
 									    "infoUser": {
 									        "height": 1.35,
 									        "weight": 80.0,
@@ -351,7 +350,7 @@ public class UserController {
 								       {
 		                        		"id": 1,
 									    "name": "Eduardo Ortiz",
-									    "registrationDate":"2025-02-04T22:52:40.2276103",,
+									    "registrationDate":"2025-02-04T22:52:40.2276103",
 									    "infoUser": {
 									        "height": 1.35,
 									        "weight": 80.0,
@@ -435,7 +434,7 @@ public class UserController {
 									    "data": {
 			                        		"id": 1,
 										    "name": "Eduardo Alberto Ortiz",
-										    "registrationDate":"2025-02-04T22:52:40.2276103",,
+										    "registrationDate":"2025-02-04T22:52:40.2276103",
 										    "infoUser": {
 										        "height": 1.35,
 										        "weight": 80.0,
