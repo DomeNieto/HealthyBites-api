@@ -10,6 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * AdviceRequestDto is a Data Transfer Object (DTO) that represents the request data for creating or updating an advice.
+ * It contains fields for the title, description, and creation date of the advice.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

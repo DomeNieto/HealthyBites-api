@@ -14,12 +14,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.healthybites.api.ApiError;
 import com.healthybites.api.ApiResponseDto;
+import com.healthybites.dtos.advice.AdviceResponseDto;
 import com.healthybites.dtos.ingredient.IngredientResponseDto;
 import com.healthybites.dtos.recipe.AddIngredientToRecipeDto;
 import com.healthybites.dtos.recipe.RecipeRequestDto;
 import com.healthybites.dtos.recipe.RecipeResponseDto;
+import com.healthybites.dtos.user.UserEntityResponseDto;
 import com.healthybites.service.recipe.RecipeServiceImpl;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import org.springframework.http.*;
 import jakarta.validation.Valid;
@@ -36,6 +45,45 @@ public class RecipeController {
     @Autowired
     private RecipeServiceImpl recipeService;
 
+    @Operation(
+		    summary = "Get all recipes by user id from the database",
+		    description = "Fetch all recipes available in the database by user id",
+		    tags = {"Recipes"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Advices fetched successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                        		AdviceResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+				@ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This Java function retrieves all recipes by user and returns them in a JSON response.
      * @param userId 
@@ -52,6 +100,61 @@ public class RecipeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
+    @Operation(
+		    summary = "Get a recipe by its ID from the database",
+		    description = "Fetch a recipe based on the provided ID",
+		    tags = {"Recipes"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Recipe fetched successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                            UserEntityResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+		        @ApiResponse(responseCode = "404", 
+				description = "User not found", 
+				content = 
+				@Content(
+						schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+													"status": "NOT_FOUND",
+													"message": "No endpoint GET /api/v1/recipes.",
+													"errors": [
+														"No handler found for GET /api/v1/recipes."
+													],
+													"timestamp": "04/02/25 01:15:06"
+												}
+												"""))),
+				@ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This Java function retrieves one recipes by id and returns them in a JSON response.
      * 
@@ -67,6 +170,45 @@ public class RecipeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(
+		    summary = "Create a new recipe",
+		    description = "Add a new recipe to the database",
+		    tags = {"Recipes"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "201",
+		            description = "Recipe added successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                        		AdviceResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+		        @ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})	
     /**
      * This Java function creates a new recipe by processing a POST request with JSON data and
      * returns a response with the created recipe details.
@@ -84,6 +226,61 @@ public class RecipeController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @Operation(
+		    summary = "Get Ingredients For Recipe Id",
+		    description = "Fetch a ingredient based on the provided ID",
+		    tags = {"Recipes"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Recipe fetched successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                            UserEntityResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+		        @ApiResponse(responseCode = "404", 
+				description = "User not found", 
+				content = 
+				@Content(
+						schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+													"status": "NOT_FOUND",
+													"message": "No endpoint GET /api/v1/recipes.",
+													"errors": [
+														"No handler found for GET /api/v1/recipes."
+													],
+													"timestamp": "04/02/25 01:15:06"
+												}
+												"""))),
+				@ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This Java function retrieves all ingredients for a specific recipe and returns them in a JSON
      * response.
@@ -101,6 +298,83 @@ public class RecipeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    @Operation(
+		    summary = "Update an existing recipe",
+		    description = "Update the recipe details based on the provided ID",
+		    tags = {"Recipes"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Recipe updated successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                            UserEntityResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+		        @ApiResponse(
+			            responseCode = "400",
+			            description = "Invalid input provided",
+			            content = @Content(
+			                schema = @Schema(
+			                    implementation = ApiError.class,
+			                    example = """
+			                        {
+									    "type": "about:blank",
+									    "title": "Bad Request",
+									    "status": 400,
+									    "detail": "Failed to convert 'id' with value: 'a'",
+									    "instance": "/api/v1/banks/a"
+									}
+			                    """
+			                )
+			            )
+			        ),
+			        @ApiResponse(
+			            responseCode = "404",
+			            description = "Advice not found",
+			            content = @Content(
+			                schema = @Schema(
+			                    implementation = ApiError.class,
+			                    example = """
+			                        {
+									    "status": "NOT_FOUND",
+									    "message": "Advice with id 100 not found",
+									    "errors": [
+									        "Resource Not Found"
+									    ],
+									    "timestamp": "04/02/25 10:48:32"
+									}
+			                    """
+			                )
+			            )
+			        ),
+		        @ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This Java function updates a recipe by processing a PUT request with JSON data and returns a
      * response with the updated recipe details.
@@ -118,6 +392,69 @@ public class RecipeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(
+		    summary = "Delete a recipe by ID",
+		    description = "Recipe a bank from the database based on the provided ID",
+		    tags = {"Recipes"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+			            responseCode = "204",
+			            description = "Recipe deleted successfully",
+			            content = {@Content(schema = @Schema())}
+			        ),
+			        @ApiResponse(responseCode = "400", 
+					description = "Bad request", 
+					content =
+							@Content(
+									schema = @Schema(
+											implementation = ApiError.class, 
+											example = """
+												 {
+												    "type": "about:blank",
+												    "title": "Bad Request",
+												    "status": 400,
+												    "detail": "Failed to convert 'id' with value: 'a'",
+												    "instance": "/api/v1/advices"
+													}
+													                    """))),
+			        @ApiResponse(
+			            responseCode = "404",
+			            description = "Advice not found",
+			            content = @Content(
+			                schema = @Schema(
+			                    implementation = ApiError.class,
+			                    example = """
+			                        {
+									    "status": "NOT_FOUND",
+									    "message": "User with id 100 not found",
+									    "errors": [
+									        "Resource Not Found"
+									    ],
+									    "timestamp": "04/02/25 10:49:13"
+									}
+			                    """
+			                )
+			            )
+			        ),
+		        @ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This Java function deletes a recipe by its ID and returns a response indicating the deletion
      * status.
@@ -130,6 +467,83 @@ public class RecipeController {
         recipeService.deleteRecipe(recipeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @Operation(
+    	    summary = "Add an ingredient to a recipe",
+    	    description = "Add a specific ingredient with quantity to a recipe based on the provided recipe ID",
+    	    tags = {"Recipes"}
+    	)
+    	@ApiResponses(
+    	    value = {
+    	        @ApiResponse(
+    	            responseCode = "200",
+    	            description = "Ingredient added to recipe successfully",
+    	            content = @Content(
+    	                mediaType = MediaType.APPLICATION_JSON_VALUE,
+    	                schema = @Schema(
+    	                    implementation = ApiResponseDto.class
+    	                )
+    	            )
+    	        ),
+    	        @ApiResponse(
+    	            responseCode = "400",
+    	            description = "Invalid input provided",
+    	            content = @Content(
+    	                schema = @Schema(
+    	                    implementation = ApiError.class,
+    	                    example = """
+    	                    {
+    	                        "status": "BAD_REQUEST",
+    	                        "message": "Invalid ingredient or quantity provided",
+    	                        "errors": [
+    	                            "Quantity must be greater than 0"
+    	                        ],
+    	                        "timestamp": "04/02/25 11:12:34"
+    	                    }
+    	                    """
+    	                )
+    	            )
+    	        ),
+    	        @ApiResponse(
+    	            responseCode = "404",
+    	            description = "Recipe or ingredient not found",
+    	            content = @Content(
+    	                schema = @Schema(
+    	                    implementation = ApiError.class,
+    	                    example = """
+    	                    {
+    	                        "status": "NOT_FOUND",
+    	                        "message": "Ingredient or recipe not found",
+    	                        "errors": [
+    	                            "Resource Not Found"
+    	                        ],
+    	                        "timestamp": "04/02/25 11:15:22"
+    	                    }
+    	                    """
+    	                )
+    	            )
+    	        ),
+    	        @ApiResponse(
+    	            responseCode = "500",
+    	            description = "Internal server error",
+    	            content = @Content(
+    	                schema = @Schema(
+    	                    implementation = ApiError.class,
+    	                    example = """
+    	                    {
+    	                        "status": "INTERNAL_SERVER_ERROR",
+    	                        "message": "Could not open JPA EntityManager for transaction",
+    	                        "errors": [
+    	                            "An unexpected error occurred"
+    	                        ],
+    	                        "timestamp": "04/02/25 01:27:46"
+    	                    }
+    	                    """
+    	                )
+    	            )
+    	        )
+    	    }
+    	)
 
     /**
      * This Java function adds an ingredient to a recipe by processing a POST request with JSON data

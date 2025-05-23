@@ -6,14 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 /**
  * RecipeIngredientId
  * Represents the composite key for the RecipeIngredientEntity.
  * Contains fields for recipe and ingredient IDs.
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RecipeIngredientId implements Serializable {
     /**
 	 * 

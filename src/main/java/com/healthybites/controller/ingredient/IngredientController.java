@@ -1,9 +1,18 @@
 package com.healthybites.controller.ingredient;
 
+import com.healthybites.api.ApiError;
 import com.healthybites.api.ApiResponseDto;
+import com.healthybites.dtos.advice.AdviceResponseDto;
 import com.healthybites.dtos.ingredient.IngredientRequestDto;
 import com.healthybites.dtos.ingredient.IngredientResponseDto;
+import com.healthybites.dtos.user.UserEntityResponseDto;
 import com.healthybites.service.ingredient.IngredientServiceImpl;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -23,6 +32,45 @@ public class IngredientController {
     @Autowired
     private IngredientServiceImpl ingredientService;
 
+    @Operation(
+		    summary = "Get all ingredients from the database",
+		    description = "Fetch all ingredients available in the database",
+		    tags = {"Ingredients"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Ingredients fetched successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                        		IngredientResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+				@ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This Java function retrieves all ingredients and returns them in a JSON response.
      * 
@@ -38,6 +86,45 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
+    @Operation(
+		    summary = "Get all ingredients active from the database",
+		    description = "Fetch all ingredients actives available in the database",
+		    tags = {"Ingredients"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Ingredients fetched successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                        		IngredientResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+				@ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
     /**
      * This function retrieves all active ingredients and returns them in a JSON response.
      * 
@@ -54,6 +141,45 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
+    @Operation(
+		    summary = "Create a new ingredient",
+		    description = "Add a new ingredient to the database",
+		    tags = {"Ingredient"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "201",
+		            description = "Ingredient added successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                        		IngredientResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+		        @ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})	
     /**
      * This Java function creates a new ingredient by processing a POST request with JSON data and
      * returns a response with the created ingredient details.
@@ -73,6 +199,83 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+
+    @Operation(
+		    summary = "Update an existing ingredient",
+		    description = "Update the ingredient details based on the provided ID",
+		    tags = {"Ingredient"}
+		)
+		@ApiResponses(
+		    value = {
+		        @ApiResponse(
+		            responseCode = "200",
+		            description = "Ingredient updated successfully",
+		            content = {
+		                @Content(
+		                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+		                    schema = @Schema(
+		                        implementation = ApiResponseDto.class,
+		                        subTypes = {
+		                        		IngredientResponseDto.class
+		                        }
+		                    )
+		                )
+		            }
+		        ),
+		        @ApiResponse(
+			            responseCode = "400",
+			            description = "Invalid input provided",
+			            content = @Content(
+			                schema = @Schema(
+			                    implementation = ApiError.class,
+			                    example = """
+			                        {
+									    "type": "about:blank",
+									    "title": "Bad Request",
+									    "status": 400,
+									    "detail": "Failed to convert 'id' with value: 'a'",
+									    "instance": "/api/v1/banks/a"
+									}
+			                    """
+			                )
+			            )
+			        ),
+			        @ApiResponse(
+			            responseCode = "404",
+			            description = "Advice not found",
+			            content = @Content(
+			                schema = @Schema(
+			                    implementation = ApiError.class,
+			                    example = """
+			                        {
+									    "status": "NOT_FOUND",
+									    "message": "Advice with id 100 not found",
+									    "errors": [
+									        "Resource Not Found"
+									    ],
+									    "timestamp": "04/02/25 10:48:32"
+									}
+			                    """
+			                )
+			            )
+			        ),
+		        @ApiResponse(responseCode = "500", 
+				description = "Internal server error", 
+				content = {
+						@Content(
+								schema = @Schema(
+										implementation = ApiError.class, 
+										example = """
+												{
+												    "status": "INTERNAL_SERVER_ERROR",
+												    "message": "Could not open JPA EntityManager for transaction",
+												    "errors": [
+												        "An unexpected error occurred"
+												    ],
+												    "timestamp": "04/02/25 01:27:46"
+												}
+												 """)) })
+		})
    /**
     * This Java function updates an ingredient using a PUT request and returns a response with the
     * updated ingredient details.
@@ -98,6 +301,59 @@ public class IngredientController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
+    @Operation(
+    	    summary = "Reactivate an ingredient",
+    	    description = "Reactivates a previously disabled ingredient using its ID",
+    	    tags = {"Ingredient"}
+    	)
+    	@ApiResponses(value = {
+    	    @ApiResponse(
+    	        responseCode = "200",
+    	        description = "Ingredient reactivated successfully",
+    	        content = @Content(
+    	            mediaType = MediaType.APPLICATION_JSON_VALUE,
+    	            schema = @Schema(
+    	                implementation = ApiResponseDto.class,
+    	                subTypes = { IngredientResponseDto.class }
+    	            )
+    	        )
+    	    ),
+    	    @ApiResponse(
+    	        responseCode = "404",
+    	        description = "Ingredient not found",
+    	        content = @Content(
+    	            schema = @Schema(
+    	                implementation = ApiError.class,
+    	                example = """
+    	                {
+    	                    "status": "NOT_FOUND",
+    	                    "message": "Ingredient with id 100 not found",
+    	                    "errors": ["Resource Not Found"],
+    	                    "timestamp": "04/02/25 10:48:32"
+    	                }
+    	                """
+    	            )
+    	        )
+    	    ),
+    	    @ApiResponse(
+    	        responseCode = "500",
+    	        description = "Internal server error",
+    	        content = @Content(
+    	            schema = @Schema(
+    	                implementation = ApiError.class,
+    	                example = """
+    	                {
+    	                    "status": "INTERNAL_SERVER_ERROR",
+    	                    "message": "Could not open JPA EntityManager for transaction",
+    	                    "errors": ["An unexpected error occurred"],
+    	                    "timestamp": "04/02/25 01:27:46"
+    	                }
+    	                """
+    	            )
+    	        )
+    	    )
+    	})
+
     /**
      * This Java function retrieves an ingredient by its ID and returns it in a JSON response.
      * @param ingredientId The `ingredientId` is a path variable representing the unique identifier of the ingredient
@@ -114,6 +370,52 @@ public class IngredientController {
                 new ApiResponseDto<>("Ingredient updated successfully", HttpStatus.OK.value(), updated);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Operation(
+    	    summary = "Disable an ingredient",
+    	    description = "Disables an ingredient by its ID so it is no longer active",
+    	    tags = {"Ingredient"}
+    	)
+    	@ApiResponses(value = {
+    	    @ApiResponse(
+    	        responseCode = "204",
+    	        description = "Ingredient disabled successfully"
+    	    ),
+    	    @ApiResponse(
+    	        responseCode = "404",
+    	        description = "Ingredient not found",
+    	        content = @Content(
+    	            schema = @Schema(
+    	                implementation = ApiError.class,
+    	                example = """
+    	                {
+    	                    "status": "NOT_FOUND",
+    	                    "message": "Ingredient with id 100 not found",
+    	                    "errors": ["Resource Not Found"],
+    	                    "timestamp": "04/02/25 10:48:32"
+    	                }
+    	                """
+    	            )
+    	        )
+    	    ),
+    	    @ApiResponse(
+    	        responseCode = "500",
+    	        description = "Internal server error",
+    	        content = @Content(
+    	            schema = @Schema(
+    	                implementation = ApiError.class,
+    	                example = """
+    	                {
+    	                    "status": "INTERNAL_SERVER_ERROR",
+    	                    "message": "Could not open JPA EntityManager for transaction",
+    	                    "errors": ["An unexpected error occurred"],
+    	                    "timestamp": "04/02/25 01:27:46"
+    	                }
+    	                """
+    	            )
+    	        )
+    	    )
+    	})
 
     /**
      * This Java function disables an ingredient by its ID and returns a 204 No Content response.

@@ -33,34 +33,34 @@ public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredie
      */
     List<RecipeIngredientEntity> findByIngredientId(Long ingredientId);
 
-    @Modifying
-    @Transactional
-    @Query("delete from RecipeIngredientEntity ri where ri.recipe.id = :recipeId")
     /**
      * Deletes a RecipeIngredientEntity by recipe ID.
      * 
      * @param recipeId the ID of the recipe
      */
-    void deleteByRecipeId(@Param("recipeId") Long recipeId);
-
     @Modifying
     @Transactional
-    @Query("delete from RecipeIngredientEntity ri where ri.ingredient.id = :ingredientId")
+    @Query("delete from RecipeIngredientEntity ri where ri.recipe.id = :recipeId")
+    void deleteByRecipeId(@Param("recipeId") Long recipeId);
+
     /**
      * Deletes a RecipeIngredientEntity by ingredient ID.
      * 
      * @param ingredientId the ID of the ingredient
      */
-    void deleteByIngredientId(@Param("ingredientId") Long ingredientId);
-
     @Modifying
     @Transactional
-    @Query("delete from RecipeIngredientEntity ri where ri.recipe.id = :recipeId and ri.ingredient.id = :ingredientId ")
+    @Query("delete from RecipeIngredientEntity ri where ri.ingredient.id = :ingredientId")
+    void deleteByIngredientId(@Param("ingredientId") Long ingredientId);
+
     /**
      * Deletes a RecipeIngredientEntity by recipe ID and ingredient ID.
      * 
      * @param recipeId the ID of the recipe
      * @param ingredientId the ID of the ingredient
      */
+    @Modifying
+    @Transactional
+    @Query("delete from RecipeIngredientEntity ri where ri.recipe.id = :recipeId and ri.ingredient.id = :ingredientId ")
     void deleteByRecipeIdAndIngredientId(@Param("recipeId") Long recipeId, @Param("ingredientId") Long ingredientId);
 }

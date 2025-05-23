@@ -5,7 +5,7 @@ import java.util.List;
 import com.healthybites.dtos.ingredient.IngredientResponseDto;
 import com.healthybites.dtos.recipe.RecipeRequestDto;
 import com.healthybites.dtos.recipe.RecipeResponseDto;
-
+//  Service interface for managing recipe operations.
 public interface RecipeService {
 
 	List<RecipeResponseDto> getAllRecipes();

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.healthybites.dtos.ingredient.IngredientRequestDto;
 import com.healthybites.dtos.ingredient.IngredientResponseDto;
-
+//  Service interface for managing ingredient operations.
 public interface IngredientService {
 
 	List<IngredientResponseDto> getAllIngredients();
