@@ -25,6 +25,7 @@ import com.healthybites.service.user.UserServiceImpl;
 
 import jakarta.validation.Valid;
 
+// Controller user
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin(origins="*", allowedHeaders="*")

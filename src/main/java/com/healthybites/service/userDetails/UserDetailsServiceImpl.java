@@ -37,10 +37,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	JwtTokenProvider jwtTokenProvider;
 	
+	/**
+     * Maps a RoleEntity to a collection of GrantedAuthority for Spring Security.
+     * @param role the RoleEntity object
+     * @return list containing one GrantedAuthority prefixed with "ROLE_"
+     */
 	public Collection<GrantedAuthority> mapToAuthorities(RoleEntity role) {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.getName()));
     }
-
+	
+	/**
+     * Loads a UserDetails object by email.
+     * Used by Spring Security for authentication.
+     * @param email user email
+     * @return UserDetails with email, password, status flags, and authorities
+     * @throws ResourceNotFoundException if user with the given email does not exist
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByEmail(email)
@@ -57,6 +69,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
     }
 
+    /**
+     * Authenticates a user by validating the email and password.
+     * Throws BadCredentialsException if password does not match.
+     * @param email the user email
+     * @param password the raw password to verify
+     * @return an authenticated UsernamePasswordAuthenticationToken
+     * @throws BadCredentialsException if credentials are invalid
+     */
     private Authentication authenticate(String email, String password) {
         UserDetails userDetails = this.loadUserByUsername(email);
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
@@ -70,6 +90,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
     }
 
+    /**
+     * Performs login authentication and generates a JWT access token on success.
+     * Sets the authentication in the SecurityContextHolder.
+     * @param authLoginRequest DTO containing email and password for login
+     * @return AuthResponseDto containing the JWT access token
+     * @throws BadCredentialsException if login fails
+     */
     public AuthResponseDto login(AuthLoginRequestDto authLoginRequest) {
         Authentication authentication = this.authenticate(
                 authLoginRequest.getEmail(),

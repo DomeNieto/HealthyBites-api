@@ -7,6 +7,7 @@ import com.healthybites.dtos.user.UserEntityRequestDto;
 import com.healthybites.dtos.user.UserEntityResponseDto;
 import com.healthybites.entity.UserEntity;
 
+//Mapper interface for converting between user DTOs and entity.
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 

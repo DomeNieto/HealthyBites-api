@@ -58,6 +58,12 @@ public class UserServiceImpl implements UserService {
 	            .orElseThrow(() -> new ResourceNotFoundException(String.format(ROLE_NOT_FOUND_MSG, roleName)));
 	}
 	
+	/**
+     * Creates a new user with encoded password and default role.
+     * Sets registration date and links InfoUser if present.
+     * @param userRequestDto DTO containing user data
+     * @return created user response DTO
+     */
 	@Override
 	public UserEntityResponseDto createUser(UserEntityRequestDto userRequestDto) {
 		UserEntity userEntity = userMapper.toUserEntity(userRequestDto);
@@ -75,6 +81,11 @@ public class UserServiceImpl implements UserService {
 		return userMapper.toUserResponseDto(savedUser);
 	}
 
+	/**
+     * Retrieves all users.
+     * @return list of user response DTOs
+     */
+	
 	@Override
 	public List<UserEntityResponseDto> getAllUsers() {
 		return userRepository.findAll().stream()
@@ -82,12 +93,26 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
 	}
 
+	/**
+     * Retrieves a user by their ID.
+     * @param id user ID
+     * @return user response DTO
+     * @throws ResourceNotFoundException if user not found
+     */
 	@Override
 	public UserEntityResponseDto getUserById(Long id) {
 		UserEntity userEntity = validateAndGetUser(id);
 		return userMapper.toUserResponseDto(userEntity);
 	}
 
+	/**
+     * Updates user fields including infoUser, if provided.
+     * Password is re-encoded if updated.
+     * @param id user ID
+     * @param userRequestDto DTO with updated user data
+     * @return updated user response DTO
+     * @throws ResourceNotFoundException if user not found
+     */
 	@Override
 	public UserEntityResponseDto updateUser(Long id, UserEntityRequestDto userRequestDto) {
 		UserEntity userEntity = validateAndGetUser(id);
@@ -135,12 +160,23 @@ public class UserServiceImpl implements UserService {
 	        return userMapper.toUserResponseDto(updatedUser);
 	    }
 
+	/**
+     * Deletes a user by their ID.
+     * @param id user ID
+     * @throws ResourceNotFoundException if user not found
+     */
 	@Override
 	public void deleteUser(Long id) {
 		UserEntity userEntity = validateAndGetUser(id);
 		userRepository.delete(userEntity);
 	}
 
+	/**
+     * Finds a user by email.
+     * @param email user email
+     * @return user response DTO
+     * @throws ResourceNotFoundException if user not found
+     */
 	@Override
 	public UserEntityResponseDto findUserByEmail(String email) {
 		  UserEntity userEntity = validateAndGetUser(email);

@@ -6,6 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * A generic wrapper for successful API responses.
+ * Includes a timestamp, a message, an HTTP-style status code, and the response data.
+ *
+ * @param <T> The type of the data returned in the response
+ */
 @Getter
 @Setter
 @NoArgsConstructor

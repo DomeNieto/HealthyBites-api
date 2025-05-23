@@ -5,6 +5,7 @@ import java.util.List;
 import com.healthybites.dtos.user.UserEntityRequestDto;
 import com.healthybites.dtos.user.UserEntityResponseDto;
 
+//  Service interface for managing user operations.
 public interface UserService {
 	
 	UserEntityResponseDto createUser(UserEntityRequestDto userRequestDto);

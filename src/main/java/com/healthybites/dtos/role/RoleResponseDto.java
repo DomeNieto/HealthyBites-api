@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) representing a user role response.
+ * Contains the unique identifier and the role name.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

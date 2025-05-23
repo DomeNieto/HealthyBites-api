@@ -8,6 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) for capturing user health and lifestyle information.
+ * This data can be used for personalized recommendations, analytics, or profile setup.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

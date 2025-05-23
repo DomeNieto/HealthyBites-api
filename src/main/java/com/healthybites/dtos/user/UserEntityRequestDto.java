@@ -11,6 +11,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) for creating or updating a user entity.
+ * Includes basic user details and nested user information.
+ */
 @Data
 @Builder
 @NoArgsConstructor

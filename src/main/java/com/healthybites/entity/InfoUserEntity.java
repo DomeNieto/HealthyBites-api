@@ -13,6 +13,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing detailed user information related to health and lifestyle.
+ * Maps to the "info_user" table in the database.
+ */
 @Data
 @Builder
 @NoArgsConstructor

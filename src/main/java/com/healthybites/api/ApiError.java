@@ -17,6 +17,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a standard API error response.
+ * Contains relevant error details such as HTTP status, a message,
+ * a list of errors, and a timestamp for when the error occurred.
+ */
 @Getter
 @Setter
 @Builder

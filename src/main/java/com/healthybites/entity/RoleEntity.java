@@ -11,6 +11,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a user role.
+ * Maps to the "role" table in the database.
+ */
 @Data
 @Builder
 @NoArgsConstructor

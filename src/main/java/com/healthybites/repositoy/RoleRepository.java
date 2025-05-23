@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.healthybites.entity.RoleEntity;
 
+// Repository interface for Role.
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 	

@@ -9,6 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) representing the user entity response.
+ * Includes user ID, name, registration date, and nested user info data.
+ */
 @Data
 @Builder
 @NoArgsConstructor

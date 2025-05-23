@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) representing the user's health and lifestyle information
+ * returned by the system.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -24,6 +24,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a user in the system.
+ * Maps to the "users" table in the database.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -59,12 +63,23 @@ public class UserEntity {
 	@Column(name = "registration_date")
 	private LocalDateTime registrationDate;
 	
+	/**
+     * Many-to-one relationship with RoleEntity.
+     * Each user has one role.
+     */
+	
 	// Role 
 	@ManyToOne
 	@JoinColumn(name = "role_id", nullable = false)
 	@JsonBackReference
 	private RoleEntity role;
 
+	
+	/**
+     * One-to-many relationship with RecipeEntity.
+     * A user can have multiple recipes.
+     * Cascade operations propagate changes; orphanRemoval deletes disassociated recipes.
+     */
 	
 	@Builder.Default
 	@OneToMany(
@@ -87,6 +102,12 @@ public class UserEntity {
 		
 	}
    
+	/**
+     * One-to-one relationship with InfoUserEntity.
+     * Contains detailed health and lifestyle information for the user.
+     * Cascade and orphanRemoval ensure synchronization.
+     */
+	
    // InfoUser
    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
    private InfoUserEntity infoUser;

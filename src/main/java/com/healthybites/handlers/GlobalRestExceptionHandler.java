@@ -19,6 +19,10 @@ import com.healthybites.exception.ResourceNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Global exception handler for REST controllers.
+ * Handles common exceptions and customizes HTTP responses with detailed error messages.
+ */
 @RestControllerAdvice
 @Slf4j
 public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler{

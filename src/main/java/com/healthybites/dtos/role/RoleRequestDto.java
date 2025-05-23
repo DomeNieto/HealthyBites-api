@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) for creating or updating a user role.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -8,6 +8,7 @@ import com.healthybites.dtos.infouser.InfoUserRequestDto;
 import com.healthybites.dtos.infouser.InfoUserResponseDto;
 import com.healthybites.entity.InfoUserEntity;
 
+// Mapper interface for converting between InfoUser DTOs and entity.
 @Mapper(componentModel = "spring")
 public interface InfoUserMapper {
 	
